@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Search App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        * {
+  font-family: "Press Start 2P", system-ui;
+  text-align: center;
+}
+
+.main {
+ background-color: rgb(240, 217, 221);
+ border: 8px solid black;
+ border-radius: 10%;
+} 
+
+.nameid {
+ margin-top: 25px;
+}
+
+p {
+ font-size: 1.2em;
+}
+
+#image-div > img  {
+ width: 200px;
+ height: 200px;
+}
+
+.search {
+ margin-top: 50px;
+}
+
+.stats {
+ margin-bottom: 10px;
+}
+
+.stats p {
+ text-align: end;
+}
+
+.stats p span {
+ display: inline-block;
+ background-color: white;
+ border-radius: 5px;
+ width: 85px; 
+}
+
+#types {
+ margin-bottom: 20px;
+}
+.type {
+ border-radius: 5px;
+ padding: 5px;
+ margin-left: 5px;
+}
+
+@media (min-width: 992px) {
+ img#sprite {
+   margin-top: -50px
+ }
+}
+
+.electric {
+ background-color: #F7D02C;
+}.grass {
+ background-color: #7AC74C;
+}.poison {
+ background-color: #A33EA1;
+ color: white;
+}.normal {
+ background-color: #A8A77A;
+}.fire {
+ background-color: #EE8130;
+}.water {
+ background-color: #6390F0;
+}.ice {
+ background-color: #96D9D6;
+}.fighting {
+ background-color: #C22E28;
+ color: white;
+}.ground  {
+ background-color: #E2BF65;
+}.flying  {
+ background-color: #A98FF3;
+}.psychic {
+ background-color: #F95587;
+}.bug {
+ background-color: #A6B91A;
+}.rock {
+ background-color: #B6A136;
+}.ghost {
+ background-color: #735797;
+ color: white;
+}.dragon {
+ background-color: #735797;
+ color: white;
+}.dark {
+ background-color: #705746;
+ color: white;
+}.steel {
+ background-color: #B7B7CE;
+}.fairy {
+ background-color: #D685AD;
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="container search">
+        <input type="text" id="search-input" placeholder="Search by name or ID" required>
+        <button id="search-button">Search</button>
+    </div>
+
+    <div class="container main my-5">
+        <div class="row">
+            <div class="col-md-12 nameid">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 id="pokemon-name" class="col-md-12">Pokemon Name</h2>
+                        <h3 id="pokemon-id" class="col-md-12">Pokemon ID</h3>
+                    </div>
+                </div>
+            </div>
+                        <div class="col-md-4 d-flex flex-column sprite">
+                <div id="image-div" class="flex-fill" hidden>
+                    <img alt="image of pokemon" id="sprite" />
+                    <div id="types"></div>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 mt-3 stats">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <p>Weight:<span id="weight"></span></p>
+                        <p>Height:<span id="height"></span></p>
+                        <p>HP:<span id="hp"></span></p>
+                        <p>Speed:<span id="speed"></span></p>
+                    </div>
+                    <div class="col-lg-7">
+                        <p>Attack:<span id="attack"></span></p>
+                        <p>Defense:<span id="defense"></span></p>
+                        <p>Special Attack:<span id="special-attack"></span></p>
+                        <p>Special Defense:<span id="special-defense"></span></p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById("search-input");
+const btn = document.getElementById("search-button");
+const pokemonListAPI = "https://pokeapi-proxy.freecodecamp.rocks/api/pokemon"
+const pokemonName = document.getElementById("pokemon-name");
+const pokemonId = document.getElementById("pokemon-id");
+const weightSpan = document.getElementById("weight");
+const heightSpan = document.getElementById("height");
+const typesSpan = document.getElementById("types")
+const hpSpan = document.getElementById("hp");
+const attackSpan = document.getElementById("attack");
+const defenseSpan = document.getElementById("defense");
+const specialAttackSpan = document.getElementById("special-attack");
+const specialDefenseSpan = document.getElementById("special-defense");
+const speedSpan = document.getElementById("speed");
+const sprite = document.getElementById("sprite");
+
+
+
+// fetch data from pokemonListAPI
+const fetchData = async () => {
+  try {
+    const res = await fetch(pokemonListAPI);
+    const data = await res.json();
+    // send all data to showPokemon function
+    showPokemon(data);
+  }
+  catch (err) {
+    console.log(err);
+  }
+};
+
+// fetch data of specific pokemon
+const fetchSpecifics = async (url) => {
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    showSpecifics(data);
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+// destruct data and display on webpage along with sprite and formatted pokemon type(s)
+const showSpecifics = data => {
+  const {
+    height,
+    weight,
+    stats,
+    types,
+    sprites,
+  } = data;
+
+  displayStats(stats, weight, height);
+  formatTypes(types);
+  sprite.src = sprites.front_default;
+  document.querySelector(".flex-fill").hidden = false;
+ 
+}
+
+
+const showPokemon = (data) => {
+  // does pokemon or pokemon id exist check
+  if (!isPokemon(data)) {
+    return alert("Pokémon not found");
+  } else {
+    // find pokemon and display name and id, send other info to fetchSpecifics with url
+    data.results.forEach((object) => {
+      if (object.name === input.value.toLowerCase() || object.id === Number(input.value.toLowerCase())) {
+        pokemonName.innerText = object.name.toUpperCase();
+        pokemonId.innerText = "#" + object.id;
+        fetchSpecifics(object.url);
+      }
+    })
+  }
+}
+
+// formatting types, inserting types into the document
+const formatTypes = (types) => {
+  for (let type in types) {
+    typesSpan.innerHTML +=
+      `<span class="type ${types[type].type.name}">${types[type].type.name.toUpperCase()}</span>`
+  }
+}
+
+// this could definitely be written in shorter code but could'nt've been bothered
+const displayStats = (stats, weight, height) => {
+  weightSpan.innerText = weight;
+  heightSpan.innerText = height;
+  for (let i = 0; i < stats.length; i++) {
+    if (stats[i].stat.name === "hp") {
+      hpSpan.innerText = stats[i].base_stat
+    } else if (stats[i].stat.name === "attack") {
+      attackSpan.innerText = stats[i].base_stat
+    } else if (stats[i].stat.name === "defense") {
+      defenseSpan.innerText = stats[i].base_stat
+    } else if (stats[i].stat.name === "special-attack") {
+      specialAttackSpan.innerText = stats[i].base_stat
+    } else if (stats[i].stat.name === "special-defense") {
+      specialDefenseSpan.innerText = stats[i].base_stat
+    } else if (stats[i].stat.name === "speed") {
+      speedSpan.innerText = stats[i].base_stat
+    }
+  }
+}
+
+// simple isPokemon boolean
+const isPokemon = (data) => {
+  return data.results.some((obj) => obj.name === input.value.toLowerCase() || obj.id === Number(input.value.toLowerCase()));
+};
+
+btn.addEventListener('click', () => {
+  typesSpan.innerHTML = "";
+  fetchData();
+});
+
+input.addEventListener("keypress", e => {
+  if (e.key === "Enter") {
+     btn.click();
+  }
+});
+    </script>
+</body>
+
+</html>
