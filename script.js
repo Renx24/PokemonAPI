@@ -82,7 +82,7 @@ const formatTypes = (types) => {
   }
 }
 
-// this could definitely be written in shorter code but could'nt've been bothered
+// display stats in the correct places inside the document
 const displayStats = (stats, weight, height) => {
   weightSpan.innerText = weight;
   heightSpan.innerText = height;
@@ -103,7 +103,7 @@ const displayStats = (stats, weight, height) => {
   }
 }
 
-// simple isPokemon boolean
+// check if the entered value is indeed a pokemon
 const isPokemon = (data) => {
   return data.results.some((obj) => obj.name === input.value.toLowerCase() || obj.id === Number(input.value.toLowerCase()));
 };
