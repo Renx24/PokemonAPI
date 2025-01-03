@@ -146,8 +146,8 @@ p {
                     <div class="col-lg-7">
                         <p>Attack:<span id="attack"></span></p>
                         <p>Defense:<span id="defense"></span></p>
-                        <p>Special Attack:<span id="special-attack"></span></p>
-                        <p>Special Defense:<span id="special-defense"></span></p>
+                        <p class="special-attack">Special Attack:<span id="special-attack"></span></p>
+                        <p class="special-defense">Special Defense:<span id="special-defense"></span></p>
                     </div>
                 </div>
             </div>
@@ -241,7 +241,7 @@ const formatTypes = (types) => {
   }
 }
 
-// this could definitely be written in shorter code but could'nt've been bothered
+// display specific statistics
 const displayStats = (stats, weight, height) => {
   weightSpan.innerText = weight;
   heightSpan.innerText = height;
@@ -268,7 +268,6 @@ const isPokemon = (data) => {
 };
 
 btn.addEventListener('click', () => {
-  typesSpan.innerHTML = "";
   fetchData();
 });
 
