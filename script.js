@@ -10,7 +10,9 @@ const hpSpan = document.getElementById("hp");
 const attackSpan = document.getElementById("attack");
 const defenseSpan = document.getElementById("defense");
 const specialAttackSpan = document.getElementById("special-attack");
+const spAttackSpan = document.getElementById("sp-attack");
 const specialDefenseSpan = document.getElementById("special-defense");
+const spDefenseSpan = document.getElementById("sp-defense");
 const speedSpan = document.getElementById("speed");
 const sprite = document.getElementById("sprite");
 
@@ -76,6 +78,7 @@ const showPokemon = (data) => {
 
 // formatting types, inserting types into the document
 const formatTypes = (types) => {
+  typesSpan.innerHTML = "";
   for (let type in types) {
     typesSpan.innerHTML +=
       `<span class="type ${types[type].type.name}">${types[type].type.name.toUpperCase()}</span>`
@@ -94,9 +97,11 @@ const displayStats = (stats, weight, height) => {
     } else if (stats[i].stat.name === "defense") {
       defenseSpan.innerText = stats[i].base_stat
     } else if (stats[i].stat.name === "special-attack") {
-      specialAttackSpan.innerText = stats[i].base_stat
+        specialAttackSpan.innerText = stats[i].base_stat;
+        spAttackSpan.innerText = stats[i].base_stat
     } else if (stats[i].stat.name === "special-defense") {
-      specialDefenseSpan.innerText = stats[i].base_stat
+      specialDefenseSpan.innerText = stats[i].base_stat;
+      spDefenseSpan.innerText = stats[i].base_stat
     } else if (stats[i].stat.name === "speed") {
       speedSpan.innerText = stats[i].base_stat
     }
@@ -109,7 +114,6 @@ const isPokemon = (data) => {
 };
 
 btn.addEventListener('click', () => {
-  typesSpan.innerHTML = "";
   fetchData();
 });
 
