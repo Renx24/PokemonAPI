@@ -6,7 +6,7 @@
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(180deg, rgba(250,255,0,1) 30%, rgba(255,0,0,1) 100%);
 }
 
@@ -60,10 +60,6 @@ body {
 @media (max-width: 432px) {
   .main {
     width: 95%;
-  }
-
-  body {
-    height: 130vh;
   }
 
   .sp-attack,
