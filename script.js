@@ -56,7 +56,7 @@ const showSpecifics = data => {
   formatTypes(types);
   sprite.src = sprites.front_default;
   document.querySelector(".flex-fill").hidden = false;
- 
+
 }
 
 
@@ -97,8 +97,8 @@ const displayStats = (stats, weight, height) => {
     } else if (stats[i].stat.name === "defense") {
       defenseSpan.innerText = stats[i].base_stat
     } else if (stats[i].stat.name === "special-attack") {
-        specialAttackSpan.innerText = stats[i].base_stat;
-        spAttackSpan.innerText = stats[i].base_stat
+      specialAttackSpan.innerText = stats[i].base_stat;
+      spAttackSpan.innerText = stats[i].base_stat
     } else if (stats[i].stat.name === "special-defense") {
       specialDefenseSpan.innerText = stats[i].base_stat;
       spDefenseSpan.innerText = stats[i].base_stat
@@ -119,6 +119,6 @@ btn.addEventListener('click', () => {
 
 input.addEventListener("keypress", e => {
   if (e.key === "Enter") {
-     btn.click();
+    btn.click();
   }
 });
