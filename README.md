@@ -6,4 +6,4 @@ Enter the name or the ID of a Pokemon into the search bar and hit enter or click
 
 Data and sprite of Pokemon displayed though the PokeDéx API.
 
-[image](https://github.com/user-attachments/assets/062aba9b-7501-4fd8-a3be-46d6ad5e51b7)
+![image](https://github.com/user-attachments/assets/0bd186e8-f5c0-4393-a81e-d9cbf6053c1e)
