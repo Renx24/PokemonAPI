@@ -7,7 +7,6 @@
 
 body {
   height: 100vh;
-  background: rgb(250,255,0);
   background: linear-gradient(180deg, rgba(250,255,0,1) 30%, rgba(255,0,0,1) 100%);
 }
 
@@ -55,6 +54,27 @@ body {
   }
   #pokemon-logo {
     width: 40%;
+  }
+}
+
+@media (max-width: 432px) {
+  .main {
+    width: 95%;
+  }
+
+  body {
+    height: 120vh;
+  }
+
+  .sp-attack,
+  .sp-defense {
+    display: inherit;
+    visibility: visible;
+  }
+
+  .special-attack,
+  .special-defense {
+    display: none;
   }
 }
 
